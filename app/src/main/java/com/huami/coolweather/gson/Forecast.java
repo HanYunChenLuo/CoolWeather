@@ -4,27 +4,54 @@ import com.google.gson.annotations.SerializedName;
 
 public class Forecast {
 
+    @SerializedName("cond_code_d")
+    public String cond_code_d;
+
+    @SerializedName("cond_code_n")
+    public String cond_code_n;
+
+    @SerializedName("cond_txt_d")
+    public String cond_txt_d;
+
+    @SerializedName("cond_txt_n")
+    public String cond_txt_n;
+
+    @SerializedName("date")
     public String date;
 
-    @SerializedName("tmp")
-    public Temperature temperature;
+    @SerializedName("hum")
+    public String hum;
 
-    @SerializedName("cond")
-    public More more;
+    @SerializedName("pcpn")
+    public String pcpn;
 
-    public class Temperature {
+    @SerializedName("pop")
+    public String pop;
 
-        public String max;
+    @SerializedName("pres")
+    public String pres;
 
-        public String min;
+    @SerializedName("tmp_max")
+    public String tmp_max;
 
-    }
+    @SerializedName("tmp_min")
+    public String tmp_min;
 
-    public class More {
+    @SerializedName("uv_index")
+    public String uv_index;
 
-        @SerializedName("txt_d")
-        public String info;
+    @SerializedName("vis")
+    public String vis;
 
-    }
+    @SerializedName("wind_deg")
+    public String wind_deg;
 
+    @SerializedName("wind_dir")
+    public String wind_dir;
+
+    @SerializedName("wind_sc")
+    public String wind_sc;
+
+    @SerializedName("wind_spd")
+    public String wind_spd;
 }

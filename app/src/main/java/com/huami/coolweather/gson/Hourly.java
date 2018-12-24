@@ -2,19 +2,31 @@ package com.huami.coolweather.gson;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Now {
+public class Hourly {
 
-    @SerializedName("fl")
-    public String fl;
-
-    @SerializedName("tmp")
-    public String temperature;
+    @SerializedName("cloud")
+    public String cloud;
 
     @SerializedName("cond_code")
     public String cond_code;
 
     @SerializedName("cond_txt")
     public String cond_txt;
+
+    @SerializedName("hum")
+    public String hum;
+
+    @SerializedName("pop")
+    public String pop;
+
+    @SerializedName("pres")
+    public String pres;
+
+    @SerializedName("time")
+    public String time;
+
+    @SerializedName("tmp")
+    public String tmp;
 
     @SerializedName("wind_deg")
     public String wind_deg;
@@ -27,19 +39,4 @@ public class Now {
 
     @SerializedName("wind_spd")
     public String wind_spd;
-
-    @SerializedName("hum")
-    public String hum;
-
-    @SerializedName("pcpn")
-    public String pcpn;
-
-    @SerializedName("pres")
-    public String pres;
-
-    @SerializedName("vis")
-    public String vis;
-
-    @SerializedName("cloud")
-    public String cloud;
 }
