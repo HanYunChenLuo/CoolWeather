@@ -68,7 +68,7 @@ public class WeatherActivity extends AppCompatActivity {
         if (weatherString != null) {
             Log.i("WeatherActivity", "handleWeatherResponse");
             Weather weather = Utility.handleWeatherResponse(weatherString);
-            showWeatherInfo(weather);
+            //showWeatherInfo(weather);
         } else {
             String weatherId = getIntent().getStringExtra("weather_id");
             weatherLayout.setVisibility(View.VISIBLE);
@@ -81,9 +81,7 @@ public class WeatherActivity extends AppCompatActivity {
      * 根据天气id请求城市天气信息
      */
     public void requestWeather(final String weatherId) {
-        String weatherUrl = "https://free-api.heweather.net/s6/weather/forecast?location="
-                + weatherId + "&key=b62e01f5bd704a1daa0136fa4f732da3";
-        //String weatherUrl = "http://guolin.tech/api/weather?cityid=" + weatherId + "&key=bc0418b57b2d4918819d3974ac1285d9";
+        String weatherUrl = "http://guolin.tech/api/weather?cityid=" + weatherId + "&key=9422a45a3f8940e1b71c9f24fa12299c";
         Log.i("WeatherActivity", "weatherUrl = " + weatherUrl);
         HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
             @Override
@@ -137,10 +135,10 @@ public class WeatherActivity extends AppCompatActivity {
         for (Forecast forecast : weather.forecastList) {
             View view = LayoutInflater.from(this)
                     .inflate(R.layout.forecast_item, forecastLayout, false);
-            TextView dataText = (TextView) findViewById(R.id.date_text);
-            TextView infoText = (TextView) findViewById(R.id.info_text);
-            TextView maxText = (TextView) findViewById(R.id.max_text);
-            TextView minText = (TextView) findViewById(R.id.min_text);
+            TextView dataText = (TextView) view.findViewById(R.id.date_text);
+            TextView infoText = (TextView) view.findViewById(R.id.info_text);
+            TextView maxText = (TextView) view.findViewById(R.id  .max_text);
+            TextView minText = (TextView) view.findViewById(R.id.min_text);
             dataText.setText(forecast.date);
             infoText.setText(forecast.more.info);
             maxText.setText(forecast.temperature.max);
