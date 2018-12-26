@@ -111,18 +111,23 @@ public class ChooseAreaFragment extends Fragment {
                     queryCounties();
                 } else if (currentLevel == LEVEL_COUNTY) {
                     String weatherId = countyList.get(position).getWeatherId();
-                    Log.i("WeatherActivity", "weatherId =" + weatherId);
-                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
-                    intent.putExtra("weather_id", weatherId);
-                    startActivity(intent);
-                    getActivity().finish();
+                    if (getActivity() instanceof MainActivity) {
+                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                        intent.putExtra("weather_id", weatherId);
+                        startActivity(intent);
+                        getActivity().finish();
+                    } else if (getActivity() instanceof WeatherActivity) {
+                        WeatherActivity activity = (WeatherActivity) getActivity();
+                        activity.drawerLayout.closeDrawers();
+                        activity.swipeRefresh.setRefreshing(true);
+                        activity.requestWeather(weatherId);
+                    }
                 }
             }
         });
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "Button Clicked");
                 if (currentLevel == LEVEL_COUNTY) {
                     queryCities();
                 } else if (currentLevel == LEVEL_CITY) {
@@ -143,7 +148,6 @@ public class ChooseAreaFragment extends Fragment {
             dataList.clear();
             for (Province province : provinceList) {
                 dataList.add(province.getProvinceName());
-                Log.i(TAG, province.getProvinceName());
             }
             adapter.notifyDataSetChanged();;
             listView.setSelection(0);
@@ -166,7 +170,6 @@ public class ChooseAreaFragment extends Fragment {
             dataList.clear();
             for (City city : cityList) {
                 dataList.add(city.getCityName());
-                Log.i(TAG, city.getCityName());
             }
             adapter.notifyDataSetChanged();
             listView.setSelection(0);
@@ -174,7 +177,6 @@ public class ChooseAreaFragment extends Fragment {
         } else {
             int provinceCode = selectedProvince.getProvinceCode();
             String address = "http://guolin.tech/api/china/" + provinceCode;
-            Log.i(TAG, address);
             queryFromServer(address, "city");
         }
     }
@@ -192,7 +194,6 @@ public class ChooseAreaFragment extends Fragment {
             dataList.clear();
             for (County county : countyList) {
                 dataList.add(county.getCountyName());
-                Log.i(TAG, county.getCountyName());
             }
             adapter.notifyDataSetChanged();
             listView.setSelection(0);
@@ -201,7 +202,6 @@ public class ChooseAreaFragment extends Fragment {
             int proviceCode = selectedProvince.getProvinceCode();
             int cityCode = selectedCity.getCityCode();
             String address = "http://guolin.tech/api/china/" + proviceCode + "/" + cityCode;
-            Log.i(TAG, address);
             queryFromServer(address, "county");
         }
     }
@@ -232,13 +232,10 @@ public class ChooseAreaFragment extends Fragment {
                 Log.i(TAG, "reponseText = "+ responseText);
                 boolean result = false;
                 if ("province".equals(type)) {
-                    Log.i(TAG, "handleProvinceResponse");
                     result = Utility.handleProvinceResponse(responseText);
                 } else if ("city".equals(type)) {
-                    Log.i(TAG, "handleCityResponse");
                     result = Utility.handleCityResponse(responseText, selectedProvince.getId());
                 } else if ("county".equals(type)) {
-                    Log.i(TAG, "handleCountyResponse");
                     result = Utility.handleCountyResponse(responseText, selectedCity.getId());
                 }
                 if (result) {
